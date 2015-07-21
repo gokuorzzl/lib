@@ -14,3 +14,7 @@ class Library:
         user = self.user_list.search_by_id(id)
         self.logged_user = user
         return user
+
+if __name__ == '__main__':
+    lib = Library()
+    lib.command.start()
