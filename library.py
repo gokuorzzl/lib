@@ -16,8 +16,8 @@ class Library:
         self.logged_user = user
         return user
 
-    def join(self, id):
-        user = User(id)
+    def join(self, id, is_admin=False):
+        user = User(id, is_admin)
         self.user_list.append(user)
 
     def add_book(self, name, author):
@@ -26,4 +26,5 @@ class Library:
 
 if __name__ == '__main__':
     lib = Library()
+    lib.join('admin', True)
     lib.command.start()
