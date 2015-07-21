@@ -8,4 +8,11 @@ class UserList(list):
 
 
 class BookList(list):
-    pass
+
+    def search_by_name(self, name):
+        search_result = []
+        for book, remain in self:
+            if name in book.name:
+                search_result.append([book, remain])
+
+        return search_result

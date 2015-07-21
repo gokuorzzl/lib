@@ -16,6 +16,8 @@ class Command:
                 #  로그인 실행의 주체 = self !
             elif command == '도서추가':
                 self.add_book()
+            elif command == '도서검색':
+                self.search_book()
             elif command == '가입':
                 self.join()
 
@@ -48,8 +50,24 @@ class Command:
 
             print('관리자만 가능합니다.')
             return
-            #  멈춤을 안넣고 print문만 넣어 줬습니다.
 
         name = input('책이름')
         author = input('저자')
-        self.lib.add_book(name, author)
+        remain = input('책 갯수')
+        self.lib.add_book(name, author, remain)
+
+    def search_book(self):
+        type = input('제목/저자명')
+
+        search_result = []
+        if type == '제목':
+            name = input('책 제목')
+            search_result = self.lib.book_list.search_by_name(name)
+        elif type == '저자명':
+            pass #  FIXME
+
+        if search_result:
+            for book, remain in search_result:
+                print('{}님의 {}이 {}권 남았습니다'.format(book.author, book.name, remain))
+        else:
+            print('찾으시는 책이 없습니다.')

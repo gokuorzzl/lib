@@ -20,9 +20,9 @@ class Library:
         user = User(id, is_admin)
         self.user_list.append(user)
 
-    def add_book(self, name, author):
+    def add_book(self, name, author, remain):
         book = Book(name, author)
-        self.book_list.append(book)
+        self.book_list.append([book, remain])
 
 if __name__ == '__main__':
     lib = Library()
