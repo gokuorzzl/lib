@@ -20,6 +20,10 @@ class Library:
         user = User(id)
         self.user_list.append(user)
 
+    def add_book(self, name, author):
+        book = Book(name, author)
+        self.book_list.append(book)
+
 if __name__ == '__main__':
     lib = Library()
     lib.command.start()

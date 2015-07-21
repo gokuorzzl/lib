@@ -40,23 +40,16 @@ class Command:
         print('가입되었습니다. 로그인 해보세요.')
 
     def add_book(self):
+        if self.lib.logged_user is None:
+            print('로그인 하세요')
+            return
         if not self.lib.logged_user.is_admin:
             #  self 도서관의 로그인유저는, 어드민이냐.아니냐. 묻는걸로 파악!
 
             print('관리자만 가능합니다.')
+            return
             #  멈춤을 안넣고 print문만 넣어 줬습니다.
 
-        if self.lib.logged_user.is_admin:
-            name = input('책이름')
-            author = input('저자')
-            book = Book(name, author)
-            self.lib.book_list.append(book)
-
-
-
-
-
-
-
-
-
+        name = input('책이름')
+        author = input('저자')
+        self.lib.add_book(name, author)
