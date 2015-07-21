@@ -16,6 +16,8 @@ class Command:
                 #  로그인 실행의 주체 = self !
             elif command == '도서추가':
                 self.add_book()
+            elif command == '가입':
+                self.join()
 
     def login(self):
         id = input('아이디')
@@ -27,7 +29,15 @@ class Command:
             self.join()
 
     def join(self):
-        pass
+        id = input('사용하고 싶은 아이디')
+        user = self.lib.user_list.search_by_id(id)
+        if user:
+            print('중복된 아이디 입니다.')
+            return
+
+        self.lib.join(id)
+
+        print('가입되었습니다. 로그인 해보세요.')
 
     def add_book(self):
         if not self.lib.logged_user.is_admin:

@@ -1,6 +1,7 @@
 from list import BookList, UserList
 from book import Book
 from command import Command
+from user import User
 
 class Library:
 
@@ -14,6 +15,10 @@ class Library:
         user = self.user_list.search_by_id(id)
         self.logged_user = user
         return user
+
+    def join(self, id):
+        user = User(id)
+        self.user_list.append(user)
 
 if __name__ == '__main__':
     lib = Library()
