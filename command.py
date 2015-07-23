@@ -8,8 +8,8 @@ class Command:
 
     def start(self):
         while True:
-            command = input('명령어를 입력해 주세요.')
-            print('로그인, 도서추가')
+            command = input('명령어를 입력해 주세요.'
+                            '로그인, 도서추가, 도서검색, 가입 ' )
 
             if command == '로그인':
                 self.login()
@@ -41,7 +41,7 @@ class Command:
 
         print('가입되었습니다. 로그인 해보세요.')
 
-    def add_book(self):
+    def add_book(self):     #  FIXME 도서추가시 로그인 함더 해야된다뜸
         if self.lib.logged_user is None:
             print('로그인 하세요')
             return
@@ -59,12 +59,13 @@ class Command:
     def search_book(self):
         type = input('제목/저자명')
 
-        search_result = []
+        search_result = []  #  검색결과를 []배열로 넣자!
         if type == '제목':
             name = input('책 제목')
             search_result = self.lib.book_list.search_by_name(name)
         elif type == '저자명':
-            pass #  FIXME
+            author = input('저자명')
+            search_result = self.lib.book_list.search_by_author(author)
 
         if search_result:
             for book, remain in search_result:
