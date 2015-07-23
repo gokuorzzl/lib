@@ -16,3 +16,11 @@ class BookList(list):
                 search_result.append([book, remain])
 
         return search_result
+
+    def search_by_author(self, author):
+        search_result = []
+        for book, remain in self:
+            if author in book.author:
+                search_result.append([book, remain])
+
+        return search_result
