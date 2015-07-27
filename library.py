@@ -24,6 +24,17 @@ class Library:
         book = Book(name, author)
         self.book_list.append([book, remain])
 
+    def is_rentable(self, id):
+        try:
+            return self.book_list[id][1] > 0
+        except IndexError:
+            return False
+
+    def rent(self, id):
+        book_info = self.book_list[id]
+        book_info[1] -= 1
+        return book_info[0]
+
 if __name__ == '__main__':
     lib = Library()
     lib.join('admin', True)

@@ -1,6 +1,9 @@
+from list import BookList
+
+
 class User:
 
     def __init__(self, id, is_admin=False):
         self.id = id
         self.is_admin = is_admin
-        self.book_list = []
+        self.book_list = BookList()

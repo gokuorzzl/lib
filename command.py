@@ -10,6 +10,7 @@ class Command:
             '도서검색': self.search_book,
             '가입': self.join,
             '도움말': self.help,
+            '도서대출': self.rent,
         }
         #  커멘드에 lib를 넣는 것.
 
@@ -73,7 +74,30 @@ class Command:
             search_result = self.lib.book_list.search_by_author(author)
 
         if search_result:
-            for book, remain in search_result:
-                print('{}님의 {}이 {}권 남았습니다'.format(book.author, book.name, remain))
+            for id, book, remain in search_result:
+                print('[No.{}] {}님의 {}이 {}권 남았습니다'.format(
+                    id, book.author, book.name, remain
+                ))
         else:
             print('찾으시는 책이 없습니다.')
+
+    def rent(self):
+        if self.lib.logged_user is None:
+            print('로그인이 필요합니다.')
+            return
+
+        id = input('책 고유번호')
+        try:
+            id = int(id)
+        except ValueError:
+            print('유효하지 않은 번호')
+            return
+
+        if not self.lib.is_rentable(id):
+            print('빌릴 수 없음')
+            return
+
+        rented_book = self.lib.rent(id)
+
+        self.lib.logged_user.book_list.append([rented_book, 1])
+        print('책을 빌렸습니다.')

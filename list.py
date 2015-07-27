@@ -11,16 +11,18 @@ class BookList(list):
 
     def search_by_name(self, name):
         search_result = []
-        for book, remain in self:
+        for i, book_info in enumerate(self):
+            book, remain = book_info
             if name in book.name:
-                search_result.append([book, remain])
+                search_result.append([i, book, remain])
 
         return search_result
 
     def search_by_author(self, author):
         search_result = []
-        for book, remain in self:
+        for i, book_info in self:
+            book, remain = book_info
             if author in book.author:
-                search_result.append([book, remain])
+                search_result.append([i, book, remain])
 
         return search_result
