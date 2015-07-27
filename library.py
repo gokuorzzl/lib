@@ -27,4 +27,7 @@ class Library:
 if __name__ == '__main__':
     lib = Library()
     lib.join('admin', True)
+    lib.add_book('치즈인더트랩', '순끼', 5)
+    lib.add_book('신의 탑', 'SIU', 10)
+    lib.add_book('고고고', '하일권', 1)
     lib.command.start()
