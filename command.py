@@ -11,6 +11,7 @@ class Command:
             '가입': self.join,
             '도움말': self.help,
             '도서대출': self.rent,
+            '내가빌린책': self.my_book,
         }
         #  커멘드에 lib를 넣는 것.
 
@@ -101,3 +102,16 @@ class Command:
 
         self.lib.logged_user.book_list.append([rented_book, 1])
         print('책을 빌렸습니다.')
+
+    def my_book(self):
+        if self.lib.logged_user is None:
+            print('로그인 해주세요.')
+            return
+
+        if not self.lib.logged_user.book_list:
+            print('빌린 책이 없습니다.')
+            return
+
+        for i, book_info in enumerate(self.lib.logged_user.book_list):
+            book, remain = book_info
+            print('[No.{}] {}가 지은 {}'.format(i, book.author, book.name))
