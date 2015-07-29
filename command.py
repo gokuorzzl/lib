@@ -1,4 +1,4 @@
-from book import Book
+from book import Book, Ebook
 
 class Command:
 
@@ -49,7 +49,7 @@ class Command:
 
         print('가입되었습니다. 로그인 해보세요.')
 
-    def add_book(self):     #  FIXME 도서추가시 로그인 함더 해야된다뜸
+    def add_book(self):
         if self.lib.logged_user is None:
             print('로그인 하세요')
             return
@@ -59,26 +59,40 @@ class Command:
             print('관리자만 가능합니다.')
             return
 
-        name = input('책이름')
+        type = input('도서/전자도서/논문')
+
+        name = input('타이틀')
         author = input('저자')
-        remain = input('책 갯수')
-        self.lib.add_book(name, author, remain)
+        if type == '도서':
+            remain = input('책 갯수')
+            self.lib.add_book(name, author, remain)
+        elif type == '전자도서':
+            self.lib.add_ebook(name, author)
+        else:
+            self.lib.add_paper(name, author)
 
     def search_book(self):
-        type = input('제목/저자명')
+        search_type = input('제목/저자명')
 
         search_result = []  # 검색결과를 []배열로 넣자!
-        if type == '제목':
+        if search_type == '제목':
             name = input('책 제목')
             search_result = self.lib.book_list.search_by_name(name)
-        elif type == '저자명':
+        elif search_type == '저자명':
             author = input('저자명')
             search_result = self.lib.book_list.search_by_author(author)
 
         if search_result:
             for id, book, remain in search_result:
-                print('[No.{}] {}님의 {}이 {}권 남았습니다'.format(
-                    id, book.author, book.name, remain
+                if type(book) == Book:
+                    book_type = '도서'
+                elif type(book) == Ebook:
+                    book_type = '전자도서'
+                else:
+                    book_type = '논문'
+
+                print('[No.{}] {}님의 {} {}이 {}권 남았습니다'.format(
+                    id, book.author, book_type, book.name, remain
                 ))
         else:
             print('찾으시는 책이 없습니다.')
