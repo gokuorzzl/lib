@@ -35,6 +35,14 @@ class Library:
         book_info[1] -= 1
         return book_info[0]
 
+    def return_book(self, id):
+        book = self.logged_user.book_list[id]
+        del self.logged_user.book_list[id]
+        self.book_list[id][1] += 1
+
+    def user_have_book(self, id):
+        return id in self.logged_user.book_list
+
 if __name__ == '__main__':
     lib = Library()
     lib.join('admin', True)

@@ -26,3 +26,34 @@ class BookList(list):
                 search_result.append([i, book, remain])
 
         return search_result
+
+
+class UserBookList:
+
+    def __init__(self):
+        self.data = {}
+
+    def add(self, id, book):
+        key = str(id)
+        self.data[key] = book
+
+    def contains(self, id):
+        return str(id) in self.data
+
+    def delete(self, id):
+        del self.data[str(id)]
+
+    def __contains__(self, id):
+        return self.contains(id)
+
+    def __getitem__(self, id):
+        return self.data[str(id)]
+
+    def __delitem__(self, id):
+        self.delete(id)
+
+    def items(self):
+        return self.data.items()
+
+    def __bool__(self):
+        return bool(self.data)

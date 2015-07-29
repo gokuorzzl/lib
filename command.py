@@ -12,6 +12,7 @@ class Command:
             '도움말': self.help,
             '도서대출': self.rent,
             '내가빌린책': self.my_book,
+            '도서반납': self.return_book,
         }
         #  커멘드에 lib를 넣는 것.
 
@@ -100,7 +101,7 @@ class Command:
 
         rented_book = self.lib.rent(id)
 
-        self.lib.logged_user.book_list.append([rented_book, 1])
+        self.lib.logged_user.book_list.add(id, rented_book)
         print('책을 빌렸습니다.')
 
     def my_book(self):
@@ -112,6 +113,29 @@ class Command:
             print('빌린 책이 없습니다.')
             return
 
-        for i, book_info in enumerate(self.lib.logged_user.book_list):
-            book, remain = book_info
-            print('[No.{}] {}가 지은 {}'.format(i, book.author, book.name))
+        for id, book in self.lib.logged_user.book_list.items():
+            print('[No.{}] {}가 지은 {}'.format(
+                id, book.author, book.name
+            ))
+
+    def return_book(self):
+        if self.lib.logged_user is None:
+            print('로그인 해주세요.')
+            return
+
+        if not self.lib.logged_user.book_list:
+            print('빌린 책이 없습니다.')
+            return
+
+        id = input('책번호')
+        try:
+            id = int(id)
+        except ValueError:
+            print('올바르지 않은 고유번호')
+            return
+
+        if self.lib.user_have_book(id):
+            self.lib.return_book(id)
+            print('도서를 반납하였습니다.')
+        else:
+            print('가지고 있지 않은 책입니다.')
